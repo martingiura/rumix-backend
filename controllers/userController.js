@@ -7,7 +7,33 @@ const User = require("./../models/User");
 // CREAR UN USUARIO
 exports.create = async (req, res) => {
   // 1. OBTENER USUARIO, EMAIL Y PASSWORD DEL FORMULARIO (REQ)
-  const { nombre, apellido, pais, direccion, email, password } = req.body;
+  const {
+    nombre,
+    apellido,
+    pais,
+    direccion,
+    email,
+    password,
+    imageUrl,
+    telefono,
+    rol,
+    roomatesWishList,
+    profileIsPublic,
+    verifiedStatus,
+    genre,
+    age,
+    favoriteRooms,
+    profileSummary,
+    profileDescription,
+    prefferedLocation,
+    movingDate,
+    budget,
+    frequencyCleaningRoom,
+    smokingPreferences,
+    petsPreferences,
+    visitPreferences,
+    acceptedConnections,
+  } = req.body;
 
   // 2A. REALIZAR EL PROCESO ASÍNCRONO
   try {
@@ -23,6 +49,25 @@ exports.create = async (req, res) => {
       direccion,
       email,
       password: hashedPassword,
+      imageUrl,
+      telefono,
+      rol,
+      roomatesWishList,
+      profileIsPublic,
+      verifiedStatus,
+      genre,
+      age,
+      favoriteRooms,
+      profileSummary,
+      profileDescription,
+      prefferedLocation,
+      movingDate,
+      budget,
+      frequencyCleaningRoom,
+      smokingPreferences,
+      petsPreferences,
+      visitPreferences,
+      acceptedConnections,
     });
 
     // 5. AUTENTICACIÓN CON TOKENS
@@ -141,6 +186,134 @@ exports.verifyToken = async (req, res) => {
 
     res.status(500).json({
       msg: "Hubo un error con el usuario",
+    });
+  }
+};
+exports.readAll = async (req, res) => {
+  try {
+    const users = await User.find({});
+
+    res.json({
+      msg: "Usuarios obtenidos con éxito.",
+      data: users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Hubo un error obteniendo los datos del Usuario",
+      error: error,
+    });
+  }
+};
+
+exports.readOne = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    res.json({
+      msg: "Usuarios obtenidos con éxito.",
+      data: user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "hubo un error obteniendo los datos.",
+      error: error,
+    });
+  }
+};
+
+exports.edit = async (req, res) => {
+  const { id } = req.params;
+
+  const {
+    nombre,
+    apellido,
+    pais,
+    direccion,
+    email,
+    imageUrl,
+    telefono,
+    rol,
+    roomatesWishList,
+    profileIsPublic,
+    verifiedStatus,
+    genre,
+    age,
+    favoriteRooms,
+    profileSummary,
+    profileDescription,
+    prefferedLocation,
+    movingDate,
+    budget,
+    frequencyCleaningRoom,
+    smokingPreferences,
+    petsPreferences,
+    visitPreferences,
+    acceptedConnections,
+  } = req.body;
+
+  try {
+    const findUser = await User.findById(id);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id, // ID DE USUARIO
+      {
+        nombre,
+        apellido,
+        pais,
+        direccion,
+        email,
+        password: findUser.password,
+        imageUrl,
+        telefono,
+        rol,
+        roomatesWishList,
+        profileIsPublic,
+        verifiedStatus,
+        genre,
+        age,
+        favoriteRooms,
+        profileSummary,
+        profileDescription,
+        prefferedLocation,
+        movingDate,
+        budget,
+        frequencyCleaningRoom,
+        smokingPreferences,
+        petsPreferences,
+        visitPreferences,
+        acceptedConnections, // PROPIEDADES A CAMBIAR
+      },
+      { new: true }
+    );
+
+    res.json({
+      msg: "Usuario actualizado con éxito.",
+      data: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Hubo un error con la actualización del usuario.",
+      error: error,
+    });
+  }
+};
+
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedUser = await User.findByIdAndRemove({ _id: id });
+
+    res.json({
+      msg: "Usuario borrado con éxito.",
+      data: deletedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Hubo un error borrando el Usuario.",
+      error: error,
     });
   }
 };
