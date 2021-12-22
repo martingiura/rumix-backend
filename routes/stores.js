@@ -20,7 +20,7 @@ router.get("/readone/:id", storeController.readOne);
 router.put("/edit/:id", storeController.edit);
 
 // BORRAR UN STORE
-router.delete("/delete/:id", storeController.delete);
+// router.delete("/delete/:id", storeController.delete);
 
 // 3. EXPORTACIONES
 module.exports = router;
