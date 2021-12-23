@@ -1,10 +1,10 @@
-// ./server/models/Guitar.js
+// ./server/models/Room.js
 
 // 1. IMPORTACIONES
 const mongoose = require("mongoose");
 
 // 2. SCHEMA
-const guitarSchema = mongoose.Schema({
+const roomSchema = mongoose.Schema({
   nombre: {
     type: String,
     required: true,
@@ -24,7 +24,7 @@ const guitarSchema = mongoose.Schema({
 });
 
 // 3. MODELO
-const Guitar = mongoose.model("Guitar", guitarSchema);
+const Room = mongoose.model("Room", roomSchema);
 
 // 4. EXPORTACIÓN
-module.exports = Guitar;
+module.exports = Room;

@@ -19,9 +19,8 @@ app.use(cors());
 app.use(express.json());
 
 // 3. RUTAS
-app.use("/guitars", require("./routes/guitars"));
+app.use("/rooms", require("./routes/rooms"));
 app.use("/users", require("./routes/users"));
-app.use("/stores", require("./routes/stores"));
 
 // 4. SERVER
 app.listen(process.env.PORT, () => {
